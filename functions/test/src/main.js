@@ -1,5 +1,4 @@
 import express from 'express';
-import { createServer } from 'http';
 
 const app = express();
 
@@ -16,11 +15,14 @@ app.post('/api/echo', (req, res) => {
     res.json({ message: `You said: ${message}` });
 });
 
-// Export the function to handle Appwrite HTTP events
+// Directly export the handler function
 export default async function (req, res) {
-    // Create a temporary server to handle the incoming request
-    const server = createServer(app);
-    
-    // Dispatch the request to the Express app
-    server.emit('request', req, res);
+    // Manually handle the request with Express's router
+    app.handle(req, res, (err) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else if (!res.headersSent) {
+            res.status(404).json({ error: 'Not Found' });
+        }
+    });
 };
