@@ -13,7 +13,7 @@ export default async ({ req, res, log, error }) => {
     const response = await users.list()
     log(`Total users: ${ response.totel }`)
   } catch(err) {
-    error('Could not list users: ' + err.message
+    error('Could not list users: ' + err.message)
   }
 
   if (req.path === '/ping') {
