@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import { createServer } from 'http';
+
 const app = express();
-const { createServer } = require("http"); // Import Node.js http module
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -16,7 +17,7 @@ app.post('/api/echo', (req, res) => {
 });
 
 // Export the function to handle Appwrite HTTP events
-module.exports = async function (req, res) {
+export default async function (req, res) {
     // Create a temporary server to handle the incoming request
     const server = createServer(app);
     
