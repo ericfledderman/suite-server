@@ -1,18 +1,25 @@
-import express from 'express'
+const express = require('express');
+const app = express();
+const { createServer } = require("http"); // Import Node.js http module
 
-const api = express()
-const port = 3000
+// Middleware to parse JSON requests
+app.use(express.json());
 
-api.use(express.json())
+// Define API routes
+app.get('/api/hello', (req, res) => {
+    res.json({ message: 'Hello from Express on Appwrite Functions!' });
+});
 
-api.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from Express on Appwrite Functions!' })
-})
+app.post('/api/echo', (req, res) => {
+    const { message } = req.body;
+    res.json({ message: `You said: ${message}` });
+});
 
-export default async (req, res) => {
-  if (req.url === '/api/hello' && req.method === 'GET') {
-    res.json({ mesage: 'Hello from Express on Appwrite Functions!' })
-  } else {
-    res.json({ error: 'Not Found' })
-  }
-}
+// Export the function to handle Appwrite HTTP events
+module.exports = async function (req, res) {
+    // Create a temporary server to handle the incoming request
+    const server = createServer(app);
+    
+    // Dispatch the request to the Express app
+    server.emit('request', req, res);
+};
