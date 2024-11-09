@@ -1,7 +1,7 @@
 import { Client } from 'node-appwrite'
 import { Functions } from 'node-appwrite'
 
-export default async ({ res, res, log, error }) => {
+export default async ({ req, res, log, error }) => {
   const client = new Client()
     .setEndpoint(process.env.APPWRITE_ENDPOINT)
     .setProject(process.env.APPWRITE_PROJECT)
