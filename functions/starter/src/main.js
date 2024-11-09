@@ -7,12 +7,14 @@ export default async ({ res, res, log, error }) => {
     .setProject(process.env.APPWRITE_PROJECT)
     .setKey(req.headers['X-Suite-Key'] ?? '')
 
+  const functions = new Functions(client)
+
   if (req.path === '/v1/functions') {
     if (req.method === 'GET') {
       try {
-        const functions = new Functions(client)
         const reponse = await functions.list()
         log(`Functions: ${ response.functions }`)
+        return res.text(response.functions)
       } catch (err) {
         error('Could not list users: ' + err.message)
       }
