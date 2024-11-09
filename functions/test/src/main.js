@@ -7,16 +7,15 @@ app.use(express.json());
 
 // Define API routes
 app.get('/api/hello', (req, res) => {
-    return res.json({ message: 'Hello from Express on Appwrite Functions!' });
+    res.json({ message: 'Hello from Express on Appwrite Functions!' });
 });
 
 app.post('/api/echo', (req, res) => {
     const { message } = req.body;
-    return res.json({ message: `You said: ${message}` });
+    res.json({ message: `You said: ${message}` });
 });
 
-// Export the function handler without extra error handling
+// Export the function handler for Appwrite
 export default function (req, res) {
-    // Directly handle the request with the Express app
-    app(req, res);
+    app(req, res);  // Directly pass the request and response to Express
 }
