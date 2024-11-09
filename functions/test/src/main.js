@@ -13,6 +13,6 @@ export default async (req, res) => {
   if (req.url === '/api/hello' && req.method === 'GET') {
     res.json({ mesage: 'Hello from Express on Appwrite Functions!' })
   } else {
-    res.send('Not Found')
+    res.json({ error: 'Not Found' })
   }
 }
