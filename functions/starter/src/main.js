@@ -3,8 +3,8 @@ import { Users } from 'node-appwrite'
 
 export default async ({ req, res, log, error }) => {
   const client = new Client()
-    .setEndpoint(process.env.APPWRITE_FUNCTION_ENDPOINT)
-    .setProject(process.env.APPWRITE_FUNCTION_PROJECT)
+    .setEndpoint(process.env.APPWRITE_ENDPOINT)
+    .setProject(process.env.APPWRITE_PROJECT)
     .setKey(req.headers['X-Suite-Key'] ?? '')
 
   const users = new Users(client)
