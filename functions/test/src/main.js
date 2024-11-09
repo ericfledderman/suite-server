@@ -9,7 +9,7 @@ api.get('/api/hello', (req, res) => {
   res.status(200).json({ message: 'Hello from Express on Appwrite Functions!' })
 })
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   if (req.url === '/api/hello' && req.method === 'GET') {
     res.status(200).json({ mesage: 'Hello from Express on Appwrite Functions!' })
   } else {
