@@ -7,22 +7,31 @@ app.use(express.json());
 
 // Define API routes
 app.get('/api/hello', (req, res) => {
-    res.json({ message: 'Hello from Express on Appwrite Functions!' });
+    if (!res.headersSent) {
+        res.json({ message: 'Hello from Express on Appwrite Functions!' });
+    }
 });
 
 app.post('/api/echo', (req, res) => {
     const { message } = req.body;
-    res.json({ message: `You said: ${message}` });
+    if (!res.headersSent) {
+        res.json({ message: `You said: ${message}` });
+    }
 });
 
-// Directly export the handler function
+// Export the function handler for Appwrite
 export default async function (req, res) {
-    // Manually handle the request with Express's router
-    app.handle(req, res, (err) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else if (!res.headersSent) {
-            res.status(404).json({ error: 'Not Found' });
+    try {
+        app.handle(req, res, (err) => {
+            if (err && !res.headersSent) {
+                res.status(500).json({ error: err.message });
+            } else if (!res.headersSent) {
+                res.status(404).json({ error: 'Not Found' });
+            }
+        });
+    } catch (error) {
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Internal Server Error' });
         }
-    });
+    }
 };
