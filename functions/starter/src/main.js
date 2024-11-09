@@ -11,7 +11,7 @@ export default async ({ req, res, log, error }) => {
 
   try {
     const response = await users.list()
-    log(`Total users: ${ response.totel }`)
+    log(`Total users: ${ response.total }`)
   } catch(err) {
     error('Could not list users: ' + err.message)
   }
